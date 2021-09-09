@@ -1,0 +1,24 @@
+{
+   "type": "postgres",
+   "host": "kesavan.db.elephantsql.com",
+   "port": 5432,
+   "username": "ibwrbjyn",
+   "password": "H72o596vNOrCOpgPJR7yurA2grCk__bg",
+   "database": "ibwrbjyn",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
