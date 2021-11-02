@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
 import Home from './pages/Home';
-import Tasks from './pages/Tasks';
+import Alunos from './pages/Alunos';
 const Routes: React.FC = () => {
     return (
         <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/alunos" exact component={Tasks} />
+            <Route path="/alunos" exact component={Alunos} />
         </Switch>
     );
 }

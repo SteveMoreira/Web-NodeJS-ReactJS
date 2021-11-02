@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap';
+import { Table,Button } from 'react-bootstrap';
 import api from '../../services/api';
 import moment from 'moment';
-interface ITask {
+
+interface IAluno {
     id: number;
     title: string;
     description: string;
@@ -10,19 +11,22 @@ interface ITask {
     created_at: Date;
     updated_at: Date;
 }
-const Tasks: React.FC = () => {
-    const [aluno, setAluno] = useState<ITask[]>([])
+const Alunos: React.FC = () => {
+    const [alunos, setAlunos] = useState<IAluno[]>([])
     useEffect(() => {
-        loadAluno()
+        loadAlunos()
     }, [])
-    async function loadAluno() {
-        const response = await api.get('/aluno')
+
+    async function loadAlunos() {
+        const response = await api.get('/alunos')
         console.log(response);
-        setAluno(response.data)
+        setAlunos(response.data)
     }
+
     function formatDate(date: Date) {
         return moment(date).format('DD/MM/YYYY')
     }
+
     return (
         <div className="container">
             <br />
@@ -40,12 +44,12 @@ const Tasks: React.FC = () => {
                 </thead>
                 <tbody>
                     {
-                        aluno.map(task => (
-                            <tr key={task.id}>
-                                <td>{task.id}</td>
-                                <td>{task.title}</td>
-                                <td>{formatDate(task.updated_at)}</td>
-                                <td>{task.finished ? "Finalizado" :
+                        alunos.map(aluno => (
+                            <tr key={aluno.id}>
+                                <td>{aluno.id}</td>
+                                <td>{aluno.title}</td>
+                                <td>{formatDate(aluno.updated_at)}</td>
+                                <td>{aluno.finished ? "Finalizado" :
                                     "Pendente"}</td>
                                 <td>
                                     <Button size="sm"
@@ -56,6 +60,7 @@ const Tasks: React.FC = () => {
                                         variant="warning">Visualizar</Button>{' '}
                                     <Button size="sm"
                                         variant="danger">Remover</Button>{' '}
+
                                 </td>
                             </tr>
                         ))
@@ -65,4 +70,4 @@ const Tasks: React.FC = () => {
         </div>
     );
 }
-export default Tasks;
+export default Alunos;
