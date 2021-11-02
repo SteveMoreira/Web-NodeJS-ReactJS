@@ -11,7 +11,7 @@ const Header: React.FC = () => {
                     <Nav className="me-auto">
                         <Nav.Link as={Link} className="nav-Item" to="/"
                         >Início</Nav.Link>
-                        <Nav.Link as={Link} className="nav-Item" to="/tarefas"
+                        <Nav.Link as={Link} className="nav-Item" to="/alunos"
                         >Alunos</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

@@ -11,14 +11,14 @@ interface ITask {
     updated_at: Date;
 }
 const Tasks: React.FC = () => {
-    const [tasks, setTasks] = useState<ITask[]>([])
+    const [aluno, setAluno] = useState<ITask[]>([])
     useEffect(() => {
-        loadTasks()
+        loadAluno()
     }, [])
-    async function loadTasks() {
-        const response = await api.get('/tasks')
+    async function loadAluno() {
+        const response = await api.get('/aluno')
         console.log(response);
-        setTasks(response.data)
+        setAluno(response.data)
     }
     function formatDate(date: Date) {
         return moment(date).format('DD/MM/YYYY')
@@ -40,7 +40,7 @@ const Tasks: React.FC = () => {
                 </thead>
                 <tbody>
                     {
-                        tasks.map(task => (
+                        aluno.map(task => (
                             <tr key={task.id}>
                                 <td>{task.id}</td>
                                 <td>{task.title}</td>
