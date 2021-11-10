@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Table,Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import moment from 'moment';
+import './index.css';
 
 interface IAluno {
     id: number;
@@ -13,24 +15,43 @@ interface IAluno {
 }
 const Alunos: React.FC = () => {
     const [alunos, setAlunos] = useState<IAluno[]>([])
+    const history = useHistory()
     useEffect(() => {
         loadAlunos()
     }, [])
-
     async function loadAlunos() {
         const response = await api.get('/alunos')
         console.log(response);
         setAlunos(response.data)
     }
-
     function formatDate(date: Date) {
         return moment(date).format('DD/MM/YYYY')
     }
-
+    function newAluno() {
+        history.push('/alunos_cadastro')
+    }
+    function editAluno(id: number) {
+        history.push(`/alunos_cadastro/${id}`)
+    }
+    function viewAluno(id: number) {
+        history.push(`/alunos/${id}`)
+    }
+    async function finishedAluno(id: number) {
+        await api.patch(`/alunos/${id}`)
+        loadAlunos()
+    }
+    async function deleteAluno(id: number) {
+        await api.delete(`/alunos/${id}`)
+        loadAlunos()
+    }
     return (
         <div className="container">
             <br />
-            <h1>Página de Alunos</h1>
+            <div className="aluno-header">
+                <h1>Aluno</h1>
+                <Button variant="dark" size="sm" onClick={newAluno}>Nova
+                    Tarefa</Button>
+            </div>
             <br />
             <Table striped bordered hover className="text-center">
                 <thead>
@@ -53,14 +74,15 @@ const Alunos: React.FC = () => {
                                     "Pendente"}</td>
                                 <td>
                                     <Button size="sm"
-                                        variant="primary">Editar</Button>{' '}
+                                        disabled={aluno.finished} variant="primary" onClick={() =>
+                                            editAluno(aluno.id)}>Editar</Button>{' '}
                                     <Button size="sm"
-                                        variant="success">Finalizar</Button>{' '}
-                                    <Button size="sm"
-                                        variant="warning">Visualizar</Button>{' '}
-                                    <Button size="sm"
-                                        variant="danger">Remover</Button>{' '}
-
+                                        disabled={aluno.finished} variant="success" onClick={() =>
+                                            finishedAluno(aluno.id)}>Finalizar</Button>{' '}
+                                    <Button size="sm" variant="warning"
+                                        onClick={() => viewAluno(aluno.id)}>Visualizar</Button>{' '}
+                                    <Button size="sm" variant="danger"
+                                        onClick={() => deleteAluno(aluno.id)}>Remover</Button>{' '}
                                 </td>
                             </tr>
                         ))
